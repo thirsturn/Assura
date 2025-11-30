@@ -1,0 +1,160 @@
+<div class="dashboard-container">
+  
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div>
+        <h1>Asset Dashboard</h1>
+        <p>Overview of your asset management system</p>
+      </div>
+      <button class="refresh-btn" (click)="refresh()">
+        <span class="material-icons">refresh</span>
+      </button>
+    </div>
+  
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Loading dashboard...</p>
+    </div>
+  
+    <!-- Error Message -->
+    <div *ngIf="error && !loading" class="error-state">
+      <span class="material-icons">error_outline</span>
+      <p>{{ error }}</p>
+      <button class="retry-btn" (click)="refresh()">Try Again</button>
+    </div>
+  
+    <!-- Dashboard Content -->
+    <div *ngIf="!loading && !error">
+  
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        
+        <div class="stat-card blue" (click)="goToAssets()">
+          <div class="stat-icon">
+            <span class="material-icons">inventory</span>
+          </div>
+          <div class="stat-info">
+            <h3>{{ stats.totalAssets }}</h3>
+            <p>Total Assets</p>
+          </div>
+        </div>
+  
+        <div class="stat-card green" (click)="goToAssets()">
+          <div class="stat-icon">
+            <span class="material-icons">check_circle</span>
+          </div>
+          <div class="stat-info">
+            <h3>{{ stats.activeAssets }}</h3>
+            <p>Active Assets</p>
+            <span class="percentage">{{ getPercentage(stats.activeAssets) | number: '1.0-0' }}%</span>
+          </div>
+        </div>
+  
+        <div class="stat-card blue" (click)="goToAssets()">
+          <div class="stat-icon">
+            <span class="material-icons">inventory_2</span>
+          </div>
+          <div class="stat-info">
+            <h3>{{ stats.availableAssets }}</h3>
+            <p>Available</p>
+            <span class="percentage">{{ getPercentage(stats.availableAssets) | number: '1.0-0' }}%</span>
+          </div>
+        </div>
+  
+        <div class="stat-card orange" (click)="goToAssets()">
+          <div class="stat-icon">
+            <span class="material-icons">build</span>
+          </div>
+          <div class="stat-info">
+            <h3>{{ stats.underMaintenance }}</h3>
+            <p>Maintenance</p>
+            <span class="percentage">{{ getPercentage(stats.underMaintenance) | number: '1.0-0' }}%</span>
+          </div>
+        </div>
+  
+      </div>
+  
+      <!-- Main Content Grid -->
+      <div class="content-grid">
+  
+        <!-- Recent Assets -->
+        <div class="card recent-assets">
+          <div class="card-header">
+            <h2>Recent Assets</h2>
+            <button class="link-btn" (click)="goToAssets()">View All →</button>
+          </div>
+          <div class="card-body">
+            <div *ngIf="recentAssets.length === 0" class="empty-state">
+              <span class="material-icons">inbox</span>
+              <p>No recent assets</p>
+            </div>
+            <div class="asset-list">
+              <div 
+                *ngFor="let asset of recentAssets" 
+                class="asset-item"
+                (click)="goToAssetDetail(asset.asset_id)">
+                <div class="asset-icon">
+                  <span class="material-icons">description</span>
+                </div>
+                <div class="asset-details">
+                  <h4>{{ asset.asset_name }}</h4>
+                  <p>{{ asset.serial_number }} • {{ asset.category_name }}</p>
+                  <span class="asset-date">{{ asset.created_at | date: 'short' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Category Breakdown -->
+        <div class="card category-breakdown">
+          <div class="card-header">
+            <h2>Assets by Category</h2>
+          </div>
+          <div class="card-body">
+            <div *ngIf="categories.length === 0" class="empty-state">
+              <span class="material-icons">category</span>
+              <p>No categories found</p>
+            </div>
+            <div class="category-list">
+              <div *ngFor="let category of categories" class="category-item">
+                <div class="category-info">
+                  <span class="category-name">{{ category.category_name }}</span>
+                  <span class="category-count">{{ category.count }} assets</span>
+                </div>
+                <div class="category-bar">
+                  <div 
+                    class="category-bar-fill" 
+                    [style.width.%]="getPercentage(category.count)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+  
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-buttons">
+          <button class="action-btn blue" (click)="goToCreateAsset()">
+            <span class="material-icons">add</span>
+            <span>Create Asset</span>
+          </button>
+          <button class="action-btn blue" (click)="goToQRScanner()">
+            <span class="material-icons">qr_code_scanner</span>
+            <span>Scan QR Code</span>
+          </button>
+          <button class="action-btn blue" (click)="goToAssets()">
+            <span class="material-icons">list</span>
+            <span>View All Assets</span>
+          </button>
+        </div>
+      </div>
+  
+    </div>
+  
+  </div>
