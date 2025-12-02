@@ -17,7 +17,7 @@ CREATE TABLE role (
 CREATE TABLE permission (
     permissionID INT AUTO_INCREMENT PRIMARY KEY,
     permissionName VARCHAR(60) NOT NULL UNIQUE, 
-    description VARCHAR(255)
+    description_ VARCHAR(255)
 );
 
 -- 4. Role-Permission Junction

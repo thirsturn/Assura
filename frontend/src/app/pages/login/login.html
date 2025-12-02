@@ -7,17 +7,23 @@
         <p class="login-to-system">Login to System</p>
     </div>
     <div>
-        <form>
+        <form (ngSubmit)="onLogin()">
+            @if (error) {
+                <div class="error-message">{{ error }}</div>
+            }
             <div class="mb-3">
                 Username
-                <input type="text" class="text-box" placeholder="User">
+                <input type="text" class="text-box" placeholder="User"
+                    [(ngModel)]="username" name="username" [disabled]="loading">
             </div>
             <div class="mb-3">
                 Password
-                <input type="password" class="text-box" placeholder="•••••••" >
+                <input type="password" class="text-box" placeholder="•••••••" 
+                    [(ngModel)]="password" name="password" [disabled]="loading">
             </div>
-            <button type="submit">Login</button>
-            <p><a href="">Forgot Password</a></p>
+            <button type="submit" [disabled]="loading">
+                {{ loading ? 'loggin in...': 'Login'}}
+            </button>
         </form>
     </div>
 </div>

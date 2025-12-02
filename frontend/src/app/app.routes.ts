@@ -3,6 +3,8 @@ import { LoginComponent } from './pages/login/login';
 import { AdminComponent } from './pages/admin/admin';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard';
 import { AllAssetsComponent } from './pages/admin/allAssets/allAssets';
+import { authGuard } from './core/guards/auth.guard';
+import { roleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
     {

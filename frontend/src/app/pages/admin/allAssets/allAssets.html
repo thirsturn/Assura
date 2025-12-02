@@ -1,3 +1,60 @@
-<div>
-    hi
+<div class="assets-container">
+    <h1>All Assets</h1>
+    <p class="subtitle">Manage all assets</p>
+
+    <div class="asset-grid">
+        <div class="filters">
+            <label for="assetSearch" class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input id="assetSearch" type="search" placeholder="Search by name or Id" aria-label="Search assets by name or ID" />
+            </label>
+
+            <div class="selects">
+                <select>
+                    <option value="">All assets</option>
+                    <option value="type1">Type 1</option>
+                    <option value="type2">Type 2</option>
+                </select>
+
+                <select>
+                    <option value="">Category</option>
+                    <option value="type1">Type 1</option>
+                    <option value="type2">Type 2</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table class="assets-table" role="table" aria-label="All assets table">
+                <thead>
+                    <tr>
+                        <th scope="col">Asset ID</th>
+                        <th scope="col">Asset Name</th>
+                        <th scope="col">Status</th>
+                        <th>Value (LKR)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let asset of assets"> 
+                        <td class="tag"></td> <!--id-->
+                        <td class="name-cell"> <!--name-->
+                            <div class="name-main"></div>  <!--{{a.name}}-->
+                            <div class="name-sub"></div>    <!--{{a.brand}}-->
+                        </td>
+                        <td>
+                            <span class="status-phill"></span> <!--status-->
+                        </td>
+                        <td></td> <!--value-->
+                    </tr>
+                    <tr>
+                        <td clospan="4" class="empty"> Not found </td> <!--not found -->
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
 </div>
