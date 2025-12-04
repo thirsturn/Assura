@@ -1,31 +1,28 @@
 const express = require('express');
 const cors = require('cors');
-
 require('dotenv').config();
 
-// import database configuration
 const authRoutes = require('./src/module/auth/auth.routes');
-// const userRoutes = require('./src/module/user/user.routes');
+const userRoutes = require('./src/module/user/user.routes');
+const setupRoutes = require('./src/module/setup/setup.routes');
 
 const app = express();
-const port = process.env.PORT || 3000;
 
-// MIddlewares
-// enable CORS
 app.use(cors());
-
-// parse JSON requests
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// API routes
+// Routes
 app.use('/api/auth', authRoutes);
-// app.use('/api/users', userRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/setup', setupRoutes);
 
-app.get('/', (req, res) => {
-    res.send('Assura is running...');
+// Health check
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date() });
 });
 
-// start server
-app.listen(port, () =>{
-    console.log(`Server is running on port ${port}`);
-})
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});

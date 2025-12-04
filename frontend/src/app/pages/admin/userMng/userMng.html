@@ -1,0 +1,35 @@
+<div class="usermng">
+    <h1>User Management</h1>
+    <p class="subtitle">Manage all users</p>
+
+    <div class="user-grid">
+        <div class="filters">
+            <label for="userSearch" class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input id="userSearch" type="search" placeholder="Search by name or email" />
+            </label>
+        </div>
+
+        <div class="table-wrap">
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <!-- Users will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>

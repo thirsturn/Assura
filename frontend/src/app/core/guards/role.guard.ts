@@ -23,7 +23,7 @@ export const roleGuard = (allowedRoles: string[]): CanActivateFn => {
         if (userRole) {
             authService.redirectByRole(userRole);
         } else {
-            router
+            router.navigate(['/login']);
         }
         return false;
     };

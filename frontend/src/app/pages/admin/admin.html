@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li>
-                    <a routerLink="/admin/users" routerLinkActive="active">
+                    <a routerLink="/admin/user-mng" routerLinkActive="active">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="9" cy="7" r="4"></circle>
@@ -98,20 +98,21 @@
                 <div class="profile-section" (click)="toggleProfileDropdown()" [class.active]="isProfileDropdownOpen">
                     <div class="profile-trigger">
                         <div class="avatar">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <img *ngIf="adminProfilePicture" [src]="adminProfilePicture" alt="Profile">
+                            <svg *ngIf="!adminProfilePicture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
                         </div>
                         <div class="user-details">
-                            <span class="user-name">John Admin</span>
-                            <span class="user-role">admin</span>
+                            <span class="user-name">{{ adminName }}</span>
+                            <span class="user-role">{{ adminRole }}</span>
                         </div>
                     </div>
 
                     <div class="dropdown-menu" *ngIf="isProfileDropdownOpen" (click)="$event.stopPropagation()">
                         <div class="dropdown-header">My Account</div>
-                        <a routerLink="/admin/profile" class="dropdown-item">
+                        <a routerLink="../profile" class="dropdown-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>

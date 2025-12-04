@@ -6,9 +6,10 @@ const pool = mysql.createPool(
         host:process.env.DB_HOST || 'localhost',
         user:process.env.DB_USER || 'root',
         password:process.env.DB_PASSWORD || '91967910',
-        database:process.env.DB_NAME || 'assura_fams',
+        database:process.env.DB_NAME || 'assuradb_fams',
+        queueLimit: 0,
         waitForConnections:true,
-        coonectionLimit:10
+        connectionLimit:10
     }
 );
 

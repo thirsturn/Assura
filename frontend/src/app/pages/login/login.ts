@@ -1,39 +1,65 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,            // <-- 1. Add this
-  imports: [ CommonModule, FormsModule ],                 // <-- 2. Add this
-  templateUrl: './login.html', // <-- 3. Fix file path
-  styleUrl: './login.css'      // <-- 4. Fix file path
+    selector: 'app-login',
+    standalone: true,
+    imports: [CommonModule, FormsModule],
+    templateUrl: './login.html',
+    styleUrl: './login.css'
 })
 export class LoginComponent {
-  username = '';
-  password = '';
-  error = '';
-  loading = false;
+    username: string = '';
+    password: string = '';
+    loading: boolean = false;
+    error: string = '';
 
-  constructor(private auth: AuthService) {}
-
-  onLogin(): void{
-    if (!this.username || !this.password) {
-      this.error = 'Please enter username or password';
-      return;
+    constructor(
+        private authService: AuthService,
+        private router: Router
+    ) {
+        // If already logged in, redirect to dashboard
+        if (this.authService.isAuthenticated()) {
+            const role = this.authService.userRole();
+            if (role) {
+                this.authService.redirectByRole(role);
+            }
+        }
     }
 
-    this.loading = true;
-    this.error = '';
+    onLogin(): void {
+        this.error = '';
 
-    this.auth.login(this.username, this.password).subscribe({
-      next: () => this.loading = false,
-      error: (err: HttpErrorResponse) => {
-        this.error = err.error?.message || 'Login failed. Please try again.';
-        this.loading = false;
-      }
-    });
-  }
+        if (!this.username || !this.password) {
+            this.error = 'Please enter username and password';
+            return;
+        }
+
+        this.loading = true;
+
+        this.authService.login(this.username, this.password).subscribe({
+            next: (response) => {
+                console.log('Login response:', response);
+                this.loading = false;
+                
+                // Redirect based on role
+                const role = response.user?.role;
+                console.log('User role:', role);
+                
+                if (role) {
+                    this.authService.redirectByRole(role);
+                } else {
+                    this.router.navigate(['/admin/dashboard']);
+                }
+            },
+            error: (err) => {
+                console.error('Login error:', err);
+                this.loading = false;
+                this.error = err.error?.message || 'Login failed. Please try again.';
+            }
+        });
+    }
 }

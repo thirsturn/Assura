@@ -1,106 +1,121 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
-export interface User {
-        id: number;
-        username: string;
-        firstName: string;
-        lastName: string;
-        role: string;
-        roleID: number;
-        divisionID: number | null;
+interface User {
+    id: number;
+    username: string;
+    firstName?: string;
+    lastName?: string;
+    role: string;
+    roleID?: number;
+    divisionID?: number;
 }
 
-export interface LoginResponse {
-        message: string;
-        token: string;
-        refreshToken: string;
-        user: User
+interface LoginResponse {
+    message: string;
+    token: string;
+    refreshToken?: string;
+    user: User;
 }
 
 @Injectable({
-        providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
-        private apiUrl = 'http://localhost:3000/api/auth';
-        private userSignal = signal<User | null>(null);    // Update with your backend URL
+    private apiUrl = 'http://localhost:3000/api/auth';
+    private tokenKey = 'auth_token';
+    private userKey = 'auth_user';
 
-        // public readable signals
-        currentUser = this.userSignal.asReadonly();                    // Returns User object
-        isAuthenticated = computed(() => !!this.userSignal());         // Returns boolean
-        userRole = computed(() => this.userSignal()?.role ?? null); 
+    // Signals for reactive state
+    private currentUser = signal<User | null>(null);
+    
+    // Computed signal for user role
+    userRole = computed(() => this.currentUser()?.role || null);
 
-        constructor(private http: HttpClient, private router: Router) {
-                this.loadFormStorage();
+    constructor(private http: HttpClient, private router: Router) {
+        // Load user from localStorage on init
+        this.loadUserFromStorage();
+    }
+
+    private loadUserFromStorage(): void {
+        const userStr = localStorage.getItem(this.userKey);
+        if (userStr) {
+            try {
+                this.currentUser.set(JSON.parse(userStr));
+            } catch (e) {
+                this.currentUser.set(null);
+            }
         }
+    }
 
-        private loadFormStorage(): void {
-                const userJson = localStorage.getItem('user');
-                if (userJson) {
-                        try {
-                                this.userSignal.set(JSON.parse(userJson));
-                        } catch {
-                                this.clearStorage();
-                        }
-                }
-        }
+    login(username: string, password: string): Observable<LoginResponse> {
+        return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { username, password })
+            .pipe(
+                tap(response => {
+                    if (response.token) {
+                        localStorage.setItem(this.tokenKey, response.token);
+                        localStorage.setItem(this.userKey, JSON.stringify(response.user));
+                        this.currentUser.set(response.user);
+                    }
+                })
+            );
+    }
 
-        private clearStorage(): void {
-                localStorage.removeItem('token');
-                localStorage.removeItem('refreshToken');
-                localStorage.removeItem('user');
-        }
+    logout(): void {
+        localStorage.removeItem(this.tokenKey);
+        localStorage.removeItem(this.userKey);
+        this.currentUser.set(null);
+        this.router.navigate(['/login']);
+    }
 
-        // login method
-        login(username: string, password: string): Observable<LoginResponse> {
-                return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { username, password })
-                        .pipe(
-                                tap(res => {
-                                        localStorage.setItem('token', res.token);
-                                        localStorage.setItem('refreshToken', res.refreshToken);
-                                        localStorage.setItem('user', JSON.stringify(res.user));
-                                        this.userSignal.set(res.user);
-                                        this.redirectByRole(res.user.role);
-                                })
-                        );
+    isAuthenticated(): boolean {
+        const token = this.getToken();
+        if (!token) {
+            return false;
         }
+        
+        // Check if token is expired
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const expiry = payload.exp * 1000;
+            return Date.now() < expiry;
+        } catch (e) {
+            return false;
+        }
+    }
 
-        // logout method
-        logout(): void {
-                this.clearStorage();
-                this.userSignal.set(null);
-                this.router.navigate(['/login']);
-        }
+    getToken(): string | null {
+        return localStorage.getItem(this.tokenKey);
+    }
 
-        // get token
-        getToken(): string | null {
-                return localStorage.getItem('token');
-        }
+    getCurrentUser(): User | null {
+        return this.currentUser();
+    }
 
-        // check role
-        hasRole(role: string | string[]): boolean {
-                const userRole = this.userSignal()?.role?.toLowerCase();
-                if (!userRole) return false;
-                if (Array.isArray(role)) {
-                        return role.map(r => r.toLowerCase()).includes(userRole);
-                }
-                return userRole === role.toLowerCase();
+    hasRole(allowedRoles: string[]): boolean {
+        const user = this.currentUser();
+        if (!user || !user.role) {
+            return false;
         }
+        return allowedRoles.some(role => 
+            role.toLowerCase() === user.role.toLowerCase()
+        );
+    }
 
-        // redirect by role
-        redirectByRole(role: string): void {
-                const routs: Record<string, string> = {
-                        admin: '/admin/dashboard',
-                        manager: '/manager/dashboard',
-                        user: '/user/dashboard',
-                        storeKeeper: '/store-keeper/dashboard',
-                        superintendent: '/superintendent/dashboard',
-                        accountant: '/accountant/dashboard',
-                        auditor: '/auditor/dashboard'
-                };
-                this.router.navigate([routs[role.toLowerCase()] || '/dashboard']);
-        }
+    redirectByRole(role: string): void {
+        const roleRoutes: { [key: string]: string } = {
+            'admin': '/admin/dashboard',
+            'manager': '/manager/dashboard',
+            'employee': '/employee/dashboard',
+            'superintendent': '/superintendent/dashboard',
+            'auditor': '/auditor/dashboard',
+            'accountant': '/accountant/dashboard',
+            'storekeeper': '/storekeeper/dashboard'
+        };
+
+        const route = roleRoutes[role.toLowerCase()] || '/login';
+        this.router.navigate([route]);
+    }
 }
-
