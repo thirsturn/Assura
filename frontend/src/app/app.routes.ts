@@ -6,12 +6,10 @@ import { AllAssetsComponent } from './pages/admin/allAssets/allAssets';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 import { UserMngComponent as User } from './pages/admin/userMng/userMng';
+import { ProfileComponent } from './pages/admin/profile/profile';
 
 export const routes: Routes = [
-    // {
-    //     path: 'login',
-    //     component: LoginComponent
-    // },
+    
     {
         path: '',
         redirectTo: 'login',
@@ -44,17 +42,18 @@ export const routes: Routes = [
                 component: User
             },
             {
+                path: 'profile',
+                component: ProfileComponent
+            },
+            {
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full'
             }
         ]
-    },
-    
-    {
-        path: 'profile',
-        loadComponent: () => import('./pages/profile/profile').then(m => m.ProfileComponent),
     }
+
+
 ];
 
 export const appRoutingProviders: any[] = [];

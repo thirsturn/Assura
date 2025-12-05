@@ -1,7 +1,8 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard';
 import { RouterOutlet, RouterLink } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
     selector: 'app-admin',
@@ -17,40 +18,22 @@ export class AdminComponent implements OnInit {
     adminRole: string = 'Admin';
     adminProfilePicture: string = '';
 
-    constructor() { }
+    constructor(private authService: AuthService) {
+        // Effect to update local state when auth service state changes
+        effect(() => {
+            const user = this.authService.getCurrentUser();
+            if (user) {
+                this.adminName = user.firstName && user.lastName
+                    ? `${user.firstName} ${user.lastName}`
+                    : user.username || 'Admin';
+                this.adminRole = user.role || 'Admin';
+                // this.adminProfilePicture = user.profilePicture || ''; 
+            }
+        });
+    }
 
     ngOnInit(): void {
-        this.loadAdminInfo();
-
-        // listen for storage changes (e.g., profile update)
-        window.addEventListener('storage', this.onStorageChange.bind(this));
-    }
-
-    ngOnDestroy(): void {
-        window.removeEventListener('storage', this.onStorageChange.bind(this));
-    }
-
-    onStorageChange(event: StorageEvent): void{
-        if (event.key === 'user') {
-            this.loadAdminInfo();
-        }
-    }
-
-    @HostListener('window:focus', [])
-    onWindowFocus() {
-        this.loadAdminInfo();
-    }
-
-    loadAdminInfo(): void {
-        const userData = localStorage.getItem('user');
-        if (userData) {
-            const user = JSON.parse(userData);
-            this.adminName = user.firstName && user.lastName
-                ? `${user.firstName} ${user.lastName}`
-                : user.name || user.username || 'Admin';
-            this.adminRole = user.role || 'Admin';
-            this.adminProfilePicture = user.profilePicture || '';
-        }
+        // Initial load handled by effect
     }
 
     toggleSidebar() {

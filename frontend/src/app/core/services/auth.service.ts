@@ -30,7 +30,7 @@ export class AuthService {
 
     // Signals for reactive state
     private currentUser = signal<User | null>(null);
-    
+
     // Computed signal for user role
     userRole = computed(() => this.currentUser()?.role || null);
 
@@ -48,6 +48,11 @@ export class AuthService {
                 this.currentUser.set(null);
             }
         }
+    }
+
+    updateCurrentUser(user: User): void {
+        localStorage.setItem(this.userKey, JSON.stringify(user));
+        this.currentUser.set(user);
     }
 
     login(username: string, password: string): Observable<LoginResponse> {
@@ -75,7 +80,7 @@ export class AuthService {
         if (!token) {
             return false;
         }
-        
+
         // Check if token is expired
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));
@@ -99,7 +104,7 @@ export class AuthService {
         if (!user || !user.role) {
             return false;
         }
-        return allowedRoles.some(role => 
+        return allowedRoles.some(role =>
             role.toLowerCase() === user.role.toLowerCase()
         );
     }

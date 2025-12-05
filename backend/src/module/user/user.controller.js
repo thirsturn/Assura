@@ -76,3 +76,64 @@ exports.getUserById = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+exports.getCurrentUser = async (req, res) => {
+    try {
+        const userId = req.userId;
+
+        const query = `
+        SELECT 
+                u.userID,
+                u.username,
+                u.firstName,
+                u.lastName,
+                u.profilePicture,
+                r.roleName,
+                d.divisionID,
+                d.locationCode as divisionName,
+                u.isBlocked,
+                u.isOnline,
+                u.createdAt,
+                u.lastLogin
+            FROM user u
+            LEFT JOIN role r ON u.roleID = r.roleID
+            LEFT JOIN division d ON u.divisionID = d.divisionID
+            WHERE u.userID = ?
+        `;
+
+        const [rows] = await db.query(query, [userId]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json(rows[0]);
+    } catch (error) {
+        console.error('Get current user error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+// update user
+exports.updateProfile = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const { firstName, lastName, profilePicture } = req.body;
+
+        if (!firstName || !lastName) {
+            return res.status(400).json({ message: 'First name and last name are required' });
+        }
+
+        const query = `
+            UPDATE user 
+            SET firstName = ?, lastName = ?, profilePicture = ?
+            WHERE userID = ?
+        `;
+
+        await db.query(query, [firstName, lastName, profilePicture || null, userId]);
+
+        res.json({ message: 'Profile updated successfully' });
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({ message: 'Error updating profile' });
+    }
+}

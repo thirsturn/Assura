@@ -2,21 +2,25 @@ const jwt = require('jsonwebtoken');
 const authConfig = require('../../config/auth.config');
 
 exports.verifyToken = (req, res, next) => {
-    const authHeader = req.headers.authorization;
+    const token = req.headers['authorization'];
 
-    if (!authHeader?.startsWith('Bearer ')) {
-        return res.status(401).json({ message: 'No token provided' });
+    if (!token) {
+        return res.status(403).json({ message: 'No token provided!' });
     }
 
-    const token = authHeader.split(' ')[1];
+    const bearerToken = token.split(' ')[1];
 
-    try {
-        const decoded = jwt.verify(token, authConfig.secret);
-        req.user = decoded;
+    if (!bearerToken) {
+        return res.status(403).json({ message: 'Invalid token format!' });
+    }
+
+    jwt.verify(bearerToken, authConfig.secret, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ message: 'Unauthorized!' });
+        }
+        req.userId = decoded.id;
         next();
-    } catch (error) {
-        return res.status(401).json({ message: 'Invalid or expired token' });
-    }
+    });
 };
 
 // role based access by role name
@@ -41,7 +45,7 @@ exports.requirePermission = (permissionName) => {
     return async (req, res, next) => {
         try {
             const db = require('../../config/db.config');
-            
+
             const [permissions] = await db.query(
                 `SELECT p.permissionName 
                  FROM permission p
