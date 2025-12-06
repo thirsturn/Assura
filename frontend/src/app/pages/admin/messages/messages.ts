@@ -1,7 +1,10 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Subject, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
     selector: 'app-messages',
@@ -11,7 +14,7 @@ import { FormsModule } from '@angular/forms';
     standalone: true
 })
 
-export class MsgComponent {
+export class MsgComponent implements OnInit {
     currentTab: 'inbox' | 'sent' = 'inbox';
     messages: any[] = []; // Empty for now to show empty state
     isComposeOpen = false;
@@ -20,15 +23,25 @@ export class MsgComponent {
     searchTerm = '';
     showSuggestions = false;
     filteredUsers: any[] = [];
+    private searchTerms = new Subject<string>();
 
-    // Mock users data
-    allUsers = [
-        { id: 1, name: 'John Admin', username: 'admin', role: 'Admin' },
-        { id: 2, name: 'Sarah User', username: 'sarah.user', role: 'User' },
-        { id: 3, name: 'Mike Manager', username: 'mike.manager', role: 'Manager' },
-        { id: 4, name: 'Emily Tech', username: 'emily.tech', role: 'Technician' },
-        { id: 5, name: 'David Support', username: 'david.support', role: 'Support' }
-    ];
+    constructor(private userService: UserService) { }
+
+    ngOnInit(): void {
+        this.searchTerms.pipe(
+            debounceTime(300),
+            distinctUntilChanged(),
+            switchMap((term: string) => {
+                if (!term.trim()) {
+                    return of([]);
+                }
+                return this.userService.searchUsers(term);
+            })
+        ).subscribe(users => {
+            this.filteredUsers = users;
+            this.showSuggestions = true;
+        });
+    }
 
     switchTab(tab: 'inbox' | 'sent') {
         this.currentTab = tab;
@@ -53,15 +66,7 @@ export class MsgComponent {
 
     // Autocomplete methods
     filterUsers() {
-        if (!this.searchTerm) {
-            this.filteredUsers = [];
-            return;
-        }
-        const term = this.searchTerm.toLowerCase();
-        this.filteredUsers = this.allUsers.filter(user =>
-            user.name.toLowerCase().includes(term) ||
-            user.username.toLowerCase().includes(term)
-        );
+        this.searchTerms.next(this.searchTerm);
     }
 
     selectUser(user: any) {

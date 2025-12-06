@@ -37,7 +37,7 @@ exports.createUser = async (req, res) => {
 exports.getAllUsers = async (req, res) => {
     try {
         const [users] = await db.query(
-            `SELECT u.userID, u.username, u.firstName, u.lastName, 
+            `SELECT u.userID, u.username, u.firstName, u.lastName, u.roleID, u.divisionID,
                     u.isBlocked, u.isOnline, u.lastLogin,
                     r.roleName, d.divisionName
              FROM user u
@@ -136,4 +136,60 @@ exports.updateProfile = async (req, res) => {
         console.error('Error updating profile:', error);
         res.status(500).json({ message: 'Error updating profile' });
     }
-}
+};
+
+// Update user by ID (Admin)
+exports.updateUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { firstName, lastName, roleID, divisionID, isBlocked } = req.body;
+
+        const query = `
+            UPDATE user 
+            SET firstName = ?, lastName = ?, roleID = ?, divisionID = ?, isBlocked = ?
+            WHERE userID = ?
+        `;
+
+        await db.query(query, [firstName, lastName, roleID, divisionID, isBlocked, id]);
+
+        res.json({ message: 'User updated successfully' });
+    } catch (error) {
+        console.error('Update user error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+// Search users
+exports.searchUsers = async (req, res) => {
+    try {
+        const { q } = req.query;
+
+        if (!q) {
+            return res.json([]);
+        }
+
+        const searchTerm = `%${q}%`;
+        const query = `
+            SELECT u.userID, u.username, u.firstName, u.lastName, r.roleName
+            FROM user u
+            LEFT JOIN role r ON u.roleID = r.roleID
+            WHERE u.username LIKE ? OR u.firstName LIKE ? OR u.lastName LIKE ?
+            LIMIT 10
+        `;
+
+        const [users] = await db.query(query, [searchTerm, searchTerm, searchTerm]);
+
+        // Format the response
+        const formattedUsers = users.map(user => ({
+            id: user.userID,
+            username: user.username,
+            name: `${user.firstName} ${user.lastName}`,
+            role: user.roleName
+        }));
+
+        res.json(formattedUsers);
+    } catch (error) {
+        console.error('Search users error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
