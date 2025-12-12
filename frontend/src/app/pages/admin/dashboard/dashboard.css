@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Jost';
     background-color: #f8f9fa;
     padding: 40px 20px;
 }
@@ -38,7 +38,7 @@ h1 {
 /* Stats Cards */
 .stat-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-bottom: 32px;
 }

@@ -8,7 +8,6 @@ import { roleGuard } from './core/guards/role.guard';
 import { UserMngComponent as User } from './pages/admin/userMng/userMng';
 import { ProfileComponent } from './pages/admin/profile/profile';
 import { MsgComponent } from './pages/admin/messages/messages';
-import { ReportComponent } from './pages/admin/reports/reports'
 
 export const routes: Routes = [
     
@@ -50,10 +49,6 @@ export const routes: Routes = [
             {
                 path: 'messages',
                 component: MsgComponent
-            },
-            {
-                path: 'reports',
-                component: ReportComponent
             },
             {
                 path: '',
