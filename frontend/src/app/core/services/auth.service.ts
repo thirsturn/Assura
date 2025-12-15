@@ -117,7 +117,7 @@ export class AuthService {
             'superintendent': '/superintendent/dashboard',
             'auditor': '/auditor/dashboard',
             'accountant': '/accountant/dashboard',
-            'storekeeper': '/storekeeper/dashboard'
+            'storekeeper': '/admin/dashboard'
         };
 
         const route = roleRoutes[role.toLowerCase()] || '/login';
