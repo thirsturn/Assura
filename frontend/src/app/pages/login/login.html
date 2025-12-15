@@ -1,0 +1,33 @@
+<div class="login-container">
+    <div class="logging-section">
+        <div class="logo">
+            <img src="./assets/images/Assura.svg" alt="logo"> <br>
+        </div>
+        <div class="title">
+            <p class="assure">Assure FAMS</p>
+            <p class="login-to-system">Login to System</p>
+        </div>
+        <div>
+            <form (ngSubmit)="onLogin()">
+                <div class="mb-3">
+                    Username
+                    <input type="text" class="text-box" placeholder="User"
+                        [(ngModel)]="username" name="username" [disabled]="loading">
+                </div>
+                <div class="mb-3">
+                    Password
+                    <input type="password" class="text-box" placeholder="•••••••" 
+                        [(ngModel)]="password" name="password" [disabled]="loading">
+                </div>
+                <button type="submit" [disabled]="loading">
+                    {{ loading ? 'Logging in...': 'Login'}}
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Error message OUTSIDE and BELOW the login box -->
+    @if (error) {
+        <div class="error-message">{{ error }}</div>
+    }
+</div>

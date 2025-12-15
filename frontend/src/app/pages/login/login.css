@@ -1,0 +1,148 @@
+/* Container to hold login box and error */
+.login-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Login box */
+.logging-section {
+    color: rgb(0, 0, 0);
+    background-color: #a4c2e3;
+    padding: 40px 50px;
+    border-radius: 20px;
+    width: 380px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+/* Error message below the box */
+.error-message {
+    margin-top: 15px;
+    padding: 12px 20px;
+    background-color: #ff4444;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 14px;
+    width: 380px;
+    box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-to-system {
+    font-size: 120%;
+}
+
+.assure {
+    font-size: 200%;
+    font-weight: bold;
+}
+
+/* Label + Input container */
+.mb-3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Inputs */
+.text-box {
+    width: 60%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: none;
+    background-color: #e0e0e0;
+    outline: none;
+}
+
+.text-box:focus {
+    background-color: #d0d0d0;
+    box-shadow: 0 0 0 2px #14202c;
+}
+
+/* Centered login button */
+button {
+    width: 50%;
+    display: block;
+    margin: 15px auto 0 auto;
+    color: white;
+    padding: 8px 12px;
+    background-color: #14202c;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover:not(:disabled) {
+    background-color: #0070f0;
+    color: white;
+}
+
+button:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+}
+
+/* Logo */
+.logo img {
+    width: 50px;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo h2 {
+    position: absolute;
+    top: 120px;
+    left: 47.2%;
+}
+
+.logo {
+    animation: fadeInOut 2s ease-in-out;
+}
+
+.AllRightsReserved {
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #000000;
+}
+
+form a {
+    text-decoration: none;
+    color: #000000;
+    text-align: center;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}

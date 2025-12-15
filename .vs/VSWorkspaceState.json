@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\backend",
+    "\\frontend",
+    "\\frontend\\src",
+    "\\frontend\\src\\app",
+    "\\frontend\\src\\app\\pages",
+    "\\frontend\\src\\app\\pages\\admin",
+    "\\frontend\\src\\app\\pages\\admin\\allAssets"
+  ],
+  "SelectedNode": "\\frontend\\src\\app\\pages\\admin\\allAssets\\allAssets.html",
+  "PreviewInSolutionExplorer": false
+}

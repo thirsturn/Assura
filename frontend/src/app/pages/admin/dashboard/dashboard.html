@@ -1,0 +1,179 @@
+<div class="dashboard-container">
+    <h1>Admin Dashboard</h1>
+    <p class="subtitle">Complete system overview and management</p>
+
+    <!-- Stats Cards -->
+    <div class="stat-container">
+        <div class="stat-card total-assets">
+            <div class="icon-wrapper icon-blue">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6. 96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+            </div>
+            <div class="stat-label">Total Assets</div>
+            <div class="stat-value">5</div>
+        </div>
+
+        <div class="stat-card total-users">
+            <div class="icon-wrapper icon-purple">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3. 87"></path>
+                    <path d="M16 3. 13a4 4 0 0 1 0 7. 75"></path>
+                </svg>
+            </div>
+            <div class="stat-label">Total Users</div>
+            <div class="stat-value">100</div>
+        </div>
+
+        <div class="stat-card total-values">
+            <div class="icon-wrapper icon-teal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+            </div>
+            <div class="stat-label">Total Value (LKR)</div>
+            <div class="stat-value">7000</div>
+        </div>
+    </div>
+
+    <!-- Activity and Alerts Section -->
+    <div class="activity-alerts-grid">
+        <!-- Recent Activity -->
+        <div class="activity-card">
+            <h2 class="section-title">Recent Activity</h2>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <span class="activity-dot"></span>
+                    <div class="activity-content">
+                        <div class="activity-text">
+                            New asset added: <strong>Dell XPS 15 Laptop</strong>
+                        </div>
+                        <div class="activity-meta">by Sarah Manager · 2 hours ago</div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <span class="activity-dot"></span>
+                    <div class="activity-content">
+                        <div class="activity-text">
+                            Asset assigned: <strong>MacBook Pro 16"</strong>
+                        </div>
+                        <div class="activity-meta">by Emma Wilson · 4 hours ago</div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <span class="activity-dot"></span>
+                    <div class="activity-content">
+                        <div class="activity-text">
+                            Maintenance completed: <strong>HP LaserJet Printer</strong>
+                        </div>
+                        <div class="activity-meta">by John Admin · 6 hours ago</div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <span class="activity-dot"></span>
+                    <div class="activity-content">
+                        <div class="activity-text">
+                            New user created: <strong>David Chen</strong>
+                        </div>
+                        <div class="activity-meta">by John Admin · 1 day ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Alerts -->
+        <div class="alerts-card">
+            <h2 class="section-title">System Alerts</h2>
+            <div class="alerts-list">
+                <div class="alert-item alert-warning">
+                    <div class="alert-content">
+                        <div class="alert-text">Dell Optiplex Desktop in maintenance for 5 days</div>
+                        <div class="alert-time">1 day ago</div>
+                    </div>
+                </div>
+
+                <div class="alert-item alert-info">
+                    <div class="alert-content">
+                        <div class="alert-text">Warranty expiring for 3 assets next month</div>
+                        <div class="alert-time">2 days ago</div>
+                    </div>
+                </div>
+
+                <div class="alert-item alert-success">
+                    <div class="alert-content">
+                        <div class="alert-text">0 assets currently in maintenance</div>
+                        <div class="alert-time">Monitor progress</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Department Overview -->
+    <div class="department-section">
+        <h2 class="section-title">Division Overview</h2>
+        <div class="department-grid">
+            <div class="department-card">
+                <div class="department-header">
+                    <h3 class="department-name">Information Technology</h3>
+                    <span class="department-badge">1 assets</span>
+                </div>
+                <div class="department-value">2200</div>
+                <div class="department-label">Total value (LKR)</div>
+            </div>
+
+            <div class="department-card">
+                <div class="department-header">
+                    <h3 class="department-name">Communication Engineering</h3>
+                    <span class="department-badge">1 assets</span>
+                </div>
+                <div class="department-value">2900</div>
+                <div class="department-label">Total value (LKR)</div>
+            </div>
+
+            <div class="department-card">
+                <div class="department-header">
+                    <h3 class="department-name">Electronics & Microelectronics</h3>
+                    <span class="department-badge">2 assets</span>
+                </div>
+                <div class="department-value">1050</div>
+                <div class="department-label">Total value (LKR)</div>
+            </div>
+
+            <div class="department-card">
+                <div class="department-header">
+                    <h3 class="department-name">Industrial Services</h3>
+                    <span class="department-badge">1 assets</span>
+                </div>
+                <div class="department-value">800</div>
+                <div class="department-label">Total value (LKR)</div>
+            </div>
+
+            <div class="department-card">
+                <div class="department-header">
+                    <h3 class="department-name">Space Applications</h3>
+                    <span class="department-badge">1 assets</span>
+                </div>
+                <div class="department-value">800</div>
+                <div class="department-label">Total value (LKR)</div>
+            </div>
+
+            <div class="department-card">
+                <div class="department-header">
+                    <h3 class="department-name">Astronomy</h3>
+                    <span class="department-badge">1 assets</span>
+                </div>
+                <div class="department-value">800</div>
+                <div class="department-label">Total value (LKR)</div>
+            </div>
+        </div>
+    </div>
+</div>
