@@ -1,0 +1,196 @@
+<div class="page-container" *ngIf="!isLoading && asset">
+    <!-- ERROR MESSAGE BANNER -->
+    <div class="error-banner" *ngIf="errorMessage">
+      <span class="error-icon">⚠️</span>
+      {{ errorMessage }}
+    </div>
+  <div class="detail-container">
+    <div class="detail-header">
+      <div class="header-left">
+        <img [src]="getImageUrl(asset.image_path)" 
+             alt="{{ asset.asset_name }}"
+             class="asset-main-image"
+             (error)="$any($event.target).src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23ddd%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2216%22 fill=%22%23999%22%3ENo Image%3C/text%3E%3C/svg%3E'">
+        <div class="header-info">
+          <h1>{{ asset.product_name || 'Asset' }}</h1>
+          <div class="asset-meta">
+            <span class="meta-item">Asset ID: <strong>{{ asset.asset_id }}</strong></span>
+            <span class="meta-item">Asset Name: <strong>{{ asset.asset_name || 'N/A' }}</strong></span>
+          </div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-action btn-clone" (click)="cloneAsset()">
+          <span class="btn-icon">📋</span>
+          Clone
+        </button>
+        <button class="btn-action btn-edit" [routerLink]="['/assets', asset.id, 'edit']">
+          <span class="btn-icon">✏️</span>
+          Edit
+        </button>
+        <button class="btn-action btn-delete-main" (click)="deleteAsset()">
+          <span class="btn-icon">🗑️</span>
+          Delete
+        </button>
+      </div>
+    </div>
+
+    <div class="detail-body">
+      <div class="sidebar">
+        <div class="status-card">
+          <h3>Current Status</h3>
+          <span class="status-badge large" [ngClass]="getStatusClass(asset.status_name)">
+            {{ asset.status_name || 'Unknown' }}
+          </span>
+          <div class="status-info">
+            <p><strong>Location:</strong> {{ asset.location_name || 'Not assigned' }}</p>
+            <button class="btn-checkout-main" *ngIf="asset.status_name === 'Ready to Deploy'">
+              → Checkout
+            </button>
+          </div>
+        </div>
+
+        <div class="qr-card">
+          <h3>About Asset</h3>
+          
+          <!-- Debug Info -->
+          <div class="debug-info" style="background: #fff3cd; padding: 10px; margin-bottom: 10px; border-radius: 5px; font-size: 12px;">
+            <strong>Debug Info:</strong><br>
+            QR Path: {{ asset.qr_code_path || 'NULL' }}<br>
+            Has QR: {{ !!asset.qr_code_path ? 'YES' : 'NO' }}<br>
+            <div *ngIf="asset.qr_code_path" style="word-break: break-all;">
+              URL: {{ getQRCodeUrl(asset.qr_code_path) }}
+            </div>
+          </div>
+          
+          <!-- QR Code Display -->
+          <div class="qr-code-container" *ngIf="asset.qr_code_path">
+            <img [src]="getQRCodeUrl(asset.qr_code_path)" 
+                 alt="QR Code"
+                 class="qr-code"
+                 style="display: block;">
+            <div class="qr-info">
+              <p>{{ asset.asset_id }}</p>
+              <p>{{ asset.asset_id }}</p>
+              <p>Property of</p>
+              <p>Demo Company</p>
+            </div>
+          </div>
+          
+          <!-- No QR Code Message -->
+          <div class="no-qr-message" *ngIf="!asset.qr_code_path">
+            <p style="color: #dc3545; font-weight: bold;">⚠️ No QR Code</p>
+            <small>QR code was not generated for this asset</small>
+          </div>
+          
+          <button class="btn-print" (click)="printQRCode()" [disabled]="!asset.qr_code_path">
+            <span class="btn-icon">🖨️</span>
+            Print
+          </button>
+          
+          <p class="qr-tip">
+            <strong>Tip:</strong> To print labels in bulk, go to the main Assets table, 
+            select the checkboxes of the assets you want to print labels for and click on 
+            the Print button that appears.
+          </p>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="tabs">
+          <button class="tab active">About</button>
+          <button class="tab">Checkout Log</button>
+          <button class="tab">Change Log</button>
+          <button class="tab">Components (0)</button>
+          <button class="tab">Licenses (0)</button>
+          <button class="tab">Audits (0)</button>
+          <button class="tab">Maintenances (0)</button>
+          <button class="tab">Attachments (0)</button>
+        </div>
+
+        <div class="content-section">
+          <div class="details-grid">
+            <div class="detail-item">
+              <label>Serial Number</label>
+              <p>{{ asset.serial_number || 'N/A' }}</p>
+            </div>
+
+            <div class="detail-item">
+              <label>Product</label>
+              <p>{{ asset.product_name || 'N/A' }}</p>
+            </div>
+
+            <div class="detail-item">
+              <label>Status</label>
+              <p>
+                <span class="status-badge" [ngClass]="getStatusClass(asset.status_name)">
+                  {{ asset.status_name || 'N/A' }}
+                </span>
+              </p>
+            </div>
+
+            <div class="detail-item">
+              <label>Location</label>
+              <p>{{ asset.location_name || 'N/A' }}</p>
+            </div>
+
+            <div class="detail-item">
+              <label>Department</label>
+              <p>{{ asset.department_name || 'N/A' }}</p>
+            </div>
+
+            <div class="detail-item">
+              <label>Supplier</label>
+              <p>{{ asset.supplier_name || 'N/A' }}</p>
+            </div>
+
+            <div class="detail-item">
+              <label>Purchase Date</label>
+              <p>{{ formatDate(asset.purchase_date) }}</p>
+            </div>
+
+            <div class="detail-item">
+              <label>Purchase Cost</label>
+              <p>{{ asset.currency }} {{ asset.purchase_cost || 'N/A' }}</p>
+            </div>
+
+            <div class="detail-item">
+              <label>Warranty Expiration</label>
+              <p>{{ formatDate(asset.warranty_expiration_date) }}</p>
+            </div>
+
+            <div class="detail-item">
+              <label>Order Number</label>
+              <p>{{ asset.order_number || 'N/A' }}</p>
+            </div>
+
+            <div class="detail-item">
+              <label>Schedule Audit</label>
+              <p>{{ asset.schedule_audit || 'N/A' }}</p>
+            </div>
+
+            <div class="detail-item full-width" *ngIf="asset.notes">
+              <label>Notes</label>
+              <p class="notes-text">{{ asset.notes }}</p>
+            </div>
+
+            <div class="detail-item">
+              <label>Created At</label>
+              <p>{{ formatDate(asset.created_at) }}</p>
+            </div>
+
+            <div class="detail-item">
+              <label>Updated At</label>
+              <p>{{ formatDate(asset.updated_at) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-container" *ngIf="isLoading">
+  <div class="spinner"></div>
+  <p>Loading asset details...</p>
+</div>
