@@ -1,0 +1,32 @@
+export interface Asset {
+    id?: number;
+    asset_id: string;
+    asset_name?: string;
+    serial_number?: string;
+    product_id?: number;
+    product_name?: string;
+    manufacturer?: string;
+    status_id?: number;
+    status_name?: string;
+    status_color?: string;
+    location_id?: number;
+    location_name?: string;
+    location_address?: string;
+    department_id?: number;
+    department_name?: string;
+    supplier_id?: number;
+    supplier_name?: string;
+    supplier_email?: string;
+    contact_person?: string;
+    purchase_date?: string;
+    purchase_cost?: number;
+    currency?: string;
+    warranty_expiration_date?: string;
+    order_number?: string;
+    schedule_audit?: string;
+    notes?: string;
+    image_path?: string;
+    qr_code_path?: string;
+    created_at?: string;
+    updated_at?: string;
+  }
