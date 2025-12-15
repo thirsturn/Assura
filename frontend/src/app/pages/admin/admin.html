@@ -30,8 +30,8 @@
                         Assets
                     </a>
                 </li>
-                
-                
+
+
                 <li>
                     <a routerLink="/admin/messages" routerLinkActive="active">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -41,7 +41,7 @@
                         <span class="badge">0</span>
                     </a>
                 </li>
-                
+
                 <li>
                     <a routerLink="/admin/user-mng" routerLinkActive="active">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -52,7 +52,7 @@
                         </svg>
                         Users
                     </a>
-                <!-- </li>
+                    <!-- </li>
                 <li>
                     <a routerLink="/admin/reports" routerLinkActive="active">
                         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -67,12 +67,51 @@
                 </li> -->
             </ul>
         </nav>
+
+        <div class="actions">
+            <div class="profile-section" (click)="toggleProfileDropdown()" [class.active]="isProfileDropdownOpen">
+                <div class="profile-trigger">
+                    <div class="avatar">
+                        <img *ngIf="adminProfilePicture" [src]="adminProfilePicture" alt="Profile">
+                        <svg *ngIf="!adminProfilePicture" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name">{{ adminName }}</span>
+                        <span class="user-role">{{ adminRole }}</span>
+                    </div>
+                </div>
+
+                <div class="dropdown-menu" *ngIf="isProfileDropdownOpen" (click)="$event.stopPropagation()">
+                    <div class="dropdown-header">My Account</div>
+                    <a routerLink="/admin/profile" class="dropdown-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Profile
+                    </a>
+                    <button class="dropdown-item logout-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
     </aside>
 
     <main class="main-content">
         <header class="top-bar">
             <div class="user-info">
-                <button class="hamburger-btn" (click)="toggleSidebar()" aria-label="Toggle sidebar" title="Toggle sidebar">
+                <button class="hamburger-btn" (click)="toggleSidebar()" aria-label="Toggle sidebar"
+                    title="Toggle sidebar">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="3" y1="12" x2="21" y2="12"></line>
                         <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -82,41 +121,7 @@
                 <!-- Placeholder for breadcrumbs or page title if needed -->
             </div>
             <div class="actions">
-
-                <div class="profile-section" (click)="toggleProfileDropdown()" [class.active]="isProfileDropdownOpen">
-                    <div class="profile-trigger">
-                        <div class="avatar">
-                            <img *ngIf="adminProfilePicture" [src]="adminProfilePicture" alt="Profile">
-                            <svg *ngIf="!adminProfilePicture" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </div>
-                        <div class="user-details">
-                            <span class="user-name">{{ adminName }}</span>
-                            <span class="user-role">{{ adminRole }}</span>
-                        </div>
-                    </div>
-
-                    <div class="dropdown-menu" *ngIf="isProfileDropdownOpen" (click)="$event.stopPropagation()">
-                        <div class="dropdown-header">My Account</div>
-                        <a routerLink="/admin/profile" class="dropdown-item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                            Profile
-                        </a>
-                        <button class="dropdown-item logout-btn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                                <polyline points="16 17 21 12 16 7"></polyline>
-                                <line x1="21" y1="12" x2="9" y2="12"></line>
-                            </svg>
-                            Logout
-                        </button>
-                    </div>
-                </div>
+                <!-- Actions moved to sidebar -->
             </div>
         </header>
         <div class="content-area">
