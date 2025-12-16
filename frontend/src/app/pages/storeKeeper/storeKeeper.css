@@ -1,0 +1,33 @@
+.layout-container {
+    min-height: 100vh;
+    background-color: #f9fafb;
+}
+
+.main-content {
+    margin-left: 280px;
+    padding-top: 80px;
+    /* Height of top header */
+    min-height: 100vh;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-content.collapsed {
+    margin-left: 80px;
+}
+
+.content-wrapper {
+    padding: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 80px;
+    }
+
+    .main-content.collapsed {
+        margin-left: 0;
+    }
+}

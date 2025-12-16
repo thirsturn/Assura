@@ -1,0 +1,99 @@
+<!-- Sidebar Navigation -->
+<aside class="sidebar" [class.collapsed]="isCollapsed">
+  <!-- Logo Section -->
+  <div class="sidebar-header">
+    <div class="logo">
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      <span class="logo-text" *ngIf="!isCollapsed">Assura™</span>
+    </div>
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="sidebar-nav">
+    <div class="nav-section">
+      <p class="nav-section-title" *ngIf="!isCollapsed">MAIN MENU</p>
+
+      <a routerLink="/storeKeeper/assets" routerLinkActive="active" class="nav-link" title="Dashboard">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" fill="currentColor" />
+        </svg>
+        <span class="nav-text" *ngIf="!isCollapsed">Dashboard</span>
+      </a>
+
+      <a routerLink="/storeKeeper/assets" routerLinkActive="active" class="nav-link" title="Assets">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M20 7h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM10 4h4v3h-4V4zm10 16H4V9h16v11z"
+            fill="currentColor" />
+          <circle cx="12" cy="14" r="2" fill="currentColor" />
+        </svg>
+        <span class="nav-text" *ngIf="!isCollapsed">Assets</span>
+        <span class="badge" *ngIf="!isCollapsed">24</span>
+      </a>
+
+      <a routerLink="/storeKeeper/assets/new" routerLinkActive="active" class="nav-link" title="New Asset">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor" />
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+        </svg>
+        <span class="nav-text" *ngIf="!isCollapsed">New Asset</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Bottom Section -->
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="user-avatar">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            fill="currentColor" />
+        </svg>
+      </div>
+      <div class="user-info" *ngIf="!isCollapsed">
+        <p class="user-name">Store Keeper</p>
+        <p class="user-role">Store Keeper</p>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- Top Header Bar -->
+<header class="top-header" [class.shifted]="!isCollapsed">
+  <div class="header-content">
+    <div class="header-left">
+      <h1 class="page-title">Asset Management</h1>
+      <p class="page-subtitle">Manage and track your organization's assets</p>
+    </div>
+    <div class="header-right">
+      <button class="header-btn" title="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"
+            fill="currentColor" />
+        </svg>
+        <span class="notification-badge">3</span>
+      </button>
+      <button class="header-btn" title="Search">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+            fill="currentColor" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

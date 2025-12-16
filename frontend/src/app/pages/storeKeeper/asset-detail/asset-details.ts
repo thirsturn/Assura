@@ -11,8 +11,8 @@ import { switchMap } from 'rxjs/operators';
   selector: 'app-asset-detail',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './asset-detail.component.html',
-  styleUrls: ['./asset-detail.component.css']
+  templateUrl: 'asset-detail.html',
+  styleUrls: ['asset-details.css']
 })
 export class AssetDetailComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);

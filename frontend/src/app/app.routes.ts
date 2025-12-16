@@ -8,9 +8,9 @@ import { roleGuard } from './core/guards/role.guard';
 import { UserMngComponent as User } from './pages/admin/userMng/userMng';
 import { ProfileComponent } from './pages/admin/profile/profile';
 import { MsgComponent } from './pages/admin/messages/messages';
-import { AssetListComponent } from './pages/storeKeeper/asset-list/asset-list.component';
-import { AssetFormComponent } from './pages/storeKeeper/asset-form/asset-form.component';
-import { AssetDetailComponent } from './pages/storeKeeper/asset-detail/asset-detail.component';
+import { AssetListComponent } from './pages/storeKeeper/asset-list/asset-list';
+import { AssetFormComponent } from './pages/storeKeeper/asset-form/asset-form';
+import { AssetDetailComponent } from './pages/storeKeeper/asset-detail/asset-details';
 
 export const routes: Routes = [
     {
@@ -28,7 +28,7 @@ export const routes: Routes = [
         path: 'admin',
         loadComponent: () => import('./pages/admin/admin').then(m => m.AdminComponent),
         canActivate: [authGuard], // blocks the unauthorized access
-        data: { roles: ['Admin', 'StoreKeeper'] },
+        data: { roles: ['Admin'] },
         children: [
             {
                 path: 'dashboard',
@@ -72,6 +72,35 @@ export const routes: Routes = [
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full'
+            }
+        ]
+    },
+    {
+        path: 'storeKeeper',
+        loadComponent: () => import('./pages/storeKeeper/storeKeeper').then(m => m.StoreKeeperComponent),
+        canActivate: [authGuard],
+        data: { roles: ['StoreKeeper'] },
+        children: [
+            {
+                path: '',
+                redirectTo: 'assets',
+                pathMatch: 'full'
+            },
+            {
+                path: 'assets',
+                component: AssetListComponent
+            },
+            {
+                path: 'assets/new',
+                component: AssetFormComponent
+            },
+            {
+                path: 'assets/:id',
+                component: AssetDetailComponent
+            },
+            {
+                path: 'assets/:id/edit',
+                component: AssetFormComponent
             }
         ]
     }

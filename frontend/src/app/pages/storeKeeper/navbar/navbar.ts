@@ -6,17 +6,17 @@ import { RouterModule } from '@angular/router';
   selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  templateUrl: './navbar.html',
+  styleUrls: ['./navbar.css']
 })
 export class NavbarComponent {
   isCollapsed = false;
   @Output() sidebarToggle = new EventEmitter<boolean>();
-  
+
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
     this.sidebarToggle.emit(this.isCollapsed);
-    
+
     // Add/remove class to body for global state
     if (this.isCollapsed) {
       document.body.classList.add('sidebar-collapsed');

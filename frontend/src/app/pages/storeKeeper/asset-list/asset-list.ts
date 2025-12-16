@@ -13,8 +13,8 @@ import { filter } from 'rxjs/operators';
   selector: 'app-asset-list',
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
-  templateUrl: './asset-list.component.html',
-  styleUrls: ['./asset-list.component.css']
+  templateUrl: './asset-list.html',
+  styleUrls: ['./asset-list.css']
 })
 export class AssetListComponent implements OnInit {
   private assetService = inject(AssetService);

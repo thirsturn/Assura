@@ -10,8 +10,8 @@ import { LookupItem } from '../../../models/lookup';
   selector: 'app-asset-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './asset-form.component.html',
-  styleUrls: ['./asset-form.component.css']
+  templateUrl: 'asset-form.html',
+  styleUrls: ['asset-form.css']
 })
 export class AssetFormComponent implements OnInit {
   private fb = inject(FormBuilder);
