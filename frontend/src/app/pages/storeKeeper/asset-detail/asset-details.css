@@ -1,20 +1,11 @@
 .page-container {
-  min-height: calc(100vh - 80px);
+  min-height: 100%;
   background: #f5f7fa;
   padding: 2rem;
-  margin-left: 280px;
-  margin-top: 80px;
-  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .loading-container {
-  margin-left: 280px;
-  margin-top: 80px;
-}
-
-/* Sidebar collapsed state */
-.page-container.sidebar-collapsed {
-  margin-left: 80px;
+  /* margin removed */
 }
 
 .detail-container {
@@ -400,8 +391,6 @@
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 80px);
-  margin-left: 280px;
-  margin-top: 80px;
 }
 
 .spinner {
@@ -415,8 +404,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-container p {
@@ -426,29 +420,21 @@
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-  .page-container {
-    margin-left: 280px;
-  }
-  
   .detail-body {
     grid-template-columns: 300px 1fr;
   }
 }
 
 @media (max-width: 992px) {
-  .page-container {
-    margin-left: 80px;
-  }
-  
   .detail-body {
     grid-template-columns: 1fr;
   }
-  
+
   .sidebar {
     border-right: none;
     border-bottom: 1px solid #e9ecef;
   }
-  
+
   .details-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
@@ -458,39 +444,39 @@
   .page-container {
     padding: 1rem;
   }
-  
+
   .detail-header {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .header-left {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .asset-main-image {
     width: 100px;
     height: 100px;
   }
-  
+
   .header-info h1 {
     font-size: 1.5rem;
   }
-  
+
   .header-actions {
     width: 100%;
   }
-  
+
   .btn-action {
     flex: 1;
   }
-  
+
   .tabs {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   .details-grid {
     grid-template-columns: 1fr;
   }
@@ -498,14 +484,14 @@
 
 @media (max-width: 480px) {
   .page-container {
-    margin-left: 0;
     padding: 0.5rem;
   }
-  
+
   .loading-container {
     margin-left: 0;
   }
 }
+
 .error-banner {
   background: #f8d7da;
   color: #721c24;
@@ -529,6 +515,7 @@
     transform: translateY(-20px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;

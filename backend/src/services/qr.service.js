@@ -6,25 +6,21 @@ class QRService {
   async generateQRCode(assetInfo) {
     try {
       console.log('Generating QR code for:', assetInfo);
-      
-      // Create QR code data
-      const qrData = JSON.stringify({
-        assetId: assetInfo.assetId,
-        id: assetInfo.id,
-        type: 'asset',
-        timestamp: new Date().toISOString()
-      });
-      
+
+      // Create QR code data (URL to asset details)
+      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
+      const qrData = `${frontendUrl}/storeKeeper/assets/${assetInfo.id}`;
+
       const fileName = `qr_${assetInfo.assetId}_${Date.now()}.png`;
       const uploadsDir = path.join(__dirname, '../../uploads/qrcodes');
       const filePath = path.join(uploadsDir, fileName);
-      
+
       console.log('QR code will be saved to:', filePath);
-      
+
       // Ensure directory exists
       await fs.mkdir(uploadsDir, { recursive: true });
       console.log('Directory created/verified:', uploadsDir);
-      
+
       // Generate QR code with options
       await QRCode.toFile(filePath, qrData, {
         width: 400,
@@ -35,9 +31,9 @@ class QRService {
         },
         errorCorrectionLevel: 'H'
       });
-      
+
       console.log('QR code generated successfully:', fileName);
-      
+
       return `/uploads/qrcodes/${fileName}`;
     } catch (error) {
       console.error('QR generation error:', error);

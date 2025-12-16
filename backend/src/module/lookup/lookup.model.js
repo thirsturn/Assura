@@ -16,8 +16,8 @@ class Lookup {
     return rows;
   }
 
-  static async getDepartments() {
-    const [rows] = await pool.query('SELECT * FROM departments ORDER BY name');
+  static async getDivisions() {
+    const [rows] = await pool.query('SELECT divisionID as id, divisionName as name FROM division ORDER BY divisionName');
     return rows;
   }
 
@@ -45,9 +45,9 @@ class Lookup {
     return result.insertId;
   }
 
-  static async createDepartment(data) {
-    const [result] = await pool.query('INSERT INTO departments (name, description) VALUES (?, ?)',
-      [data.name, data.description]);
+  static async createDivision(data) {
+    const [result] = await pool.query('INSERT INTO division (divisionName) VALUES (?)',
+      [data.name]);
     return result.insertId;
   }
 

@@ -7,6 +7,17 @@ CREATE TABLE division (
     locationCode VARCHAR(50) -- Added: Helpful for Step 3 (finding items by location)
 );
 
+DELETE FROM division WHERE divisionName IN ('IT', 'HR', 'Finance', 'Operations', 'Sales', 'Marketing');
+
+INSERT INTO division (divisionID, divisionName, locationCode) VALUES 
+(1, 'Communication Engineering', 'CE-001'),
+(2, 'Electronics and Microelectronics', 'EM-001'),
+(3, 'Information Technology', 'IT-001'),
+(4, 'Industrial Services', 'IS-001'),
+(5, 'Space Applications', 'SA-001'),
+(6, 'Astronomy', 'A-001')
+ON DUPLICATE KEY UPDATE divisionName=divisionName, locationCode=locationCode;
+
 -- 2. Define the Role
 CREATE TABLE role (
     roleID INT AUTO_INCREMENT PRIMARY KEY,

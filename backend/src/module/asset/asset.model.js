@@ -7,7 +7,7 @@ class Asset {
       const [result] = await connection.query(
         `INSERT INTO assets 
         (asset_id, asset_name, serial_number, product_id, status_id, 
-         location_id, department_id, supplier_id, purchase_date, 
+         location_id, division_id, supplier_id, purchase_date, 
          purchase_cost, currency, warranty_expiration_date, order_number, 
          schedule_audit, notes, image_path, qr_code_path) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -18,7 +18,7 @@ class Asset {
           assetData.product_id || null,
           assetData.status_id || null,
           assetData.location_id || null,
-          assetData.department_id || null,
+          assetData.division_id || null,
           assetData.supplier_id || null,
           assetData.purchase_date || null,
           assetData.purchase_cost || null,
@@ -43,13 +43,13 @@ class Asset {
              p.name as product_name,
              s.name as status_name, s.color as status_color,
              l.name as location_name,
-             d.name as department_name,
+             d.divisionName as division_name,
              sup.name as supplier_name
       FROM assets a
       LEFT JOIN products p ON a.product_id = p.id
       LEFT JOIN statuses s ON a.status_id = s.id
       LEFT JOIN locations l ON a.location_id = l.id
-      LEFT JOIN departments d ON a.department_id = d.id
+      LEFT JOIN division d ON a.division_id = d.divisionID
       LEFT JOIN suppliers sup ON a.supplier_id = sup.id
       WHERE 1=1
     `;
@@ -84,13 +84,13 @@ class Asset {
               p.name as product_name, p.manufacturer,
               s.name as status_name, s.color as status_color,
               l.name as location_name, l.address as location_address,
-              d.name as department_name,
+              d.divisionName as division_name,
               sup.name as supplier_name, sup.contact_person, sup.email as supplier_email
        FROM assets a
        LEFT JOIN products p ON a.product_id = p.id
        LEFT JOIN statuses s ON a.status_id = s.id
        LEFT JOIN locations l ON a.location_id = l.id
-       LEFT JOIN departments d ON a.department_id = d.id
+       LEFT JOIN division d ON a.division_id = d.divisionID
        LEFT JOIN suppliers sup ON a.supplier_id = sup.id
        WHERE a.id = ?`,
       [id]

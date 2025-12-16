@@ -11,6 +11,7 @@ import { MsgComponent } from './pages/admin/messages/messages';
 import { AssetListComponent } from './pages/storeKeeper/asset-list/asset-list';
 import { AssetFormComponent } from './pages/storeKeeper/asset-form/asset-form';
 import { AssetDetailComponent } from './pages/storeKeeper/asset-detail/asset-details';
+import { MaintainanceComponent } from './pages/storeKeeper/maintainance/maintanance';
 
 export const routes: Routes = [
     {
@@ -101,6 +102,10 @@ export const routes: Routes = [
             {
                 path: 'assets/:id/edit',
                 component: AssetFormComponent
+            }, 
+            {
+                path: 'maintanance',
+                component: MaintainanceComponent
             }
         ]
     }

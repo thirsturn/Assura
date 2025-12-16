@@ -27,10 +27,10 @@ exports.getLocations = async (req, res) => {
   }
 };
 
-exports.getDepartments = async (req, res) => {
+exports.getDivisions = async (req, res) => {
   try {
-    const departments = await Lookup.getDepartments();
-    res.json({ success: true, data: departments });
+    const divisions = await Lookup.getDivisions();
+    res.json({ success: true, data: divisions });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -73,9 +73,9 @@ exports.createLocation = async (req, res) => {
   }
 };
 
-exports.createDepartment = async (req, res) => {
+exports.createDivision = async (req, res) => {
   try {
-    const id = await Lookup.createDepartment(req.body);
+    const id = await Lookup.createDivision(req.body);
     res.status(201).json({ success: true, data: { id, ...req.body } });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

@@ -1,14 +1,7 @@
 .page-container {
-  min-height: calc(100vh - 80px);
+  min-height: 100%;
   background: #f5f7fa;
   padding: 2rem;
-  margin-left: 280px; /* Sidebar width */
-  margin-top: 80px;   /* Header height */
-  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.page-container.sidebar-collapsed {
-  margin-left: 80px;
 }
 
 .list-container {
@@ -175,8 +168,13 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .table-container {
@@ -360,14 +358,10 @@
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-  .page-container {
-    margin-left: 280px;
-  }
-  
   .assets-table {
     font-size: 0.9rem;
   }
-  
+
   .asset-image {
     width: 50px;
     height: 50px;
@@ -377,37 +371,36 @@
 @media (max-width: 768px) {
   .page-container {
     padding: 1rem;
-    margin-left: 80px; /* Collapsed sidebar on mobile */
   }
-  
+
   .list-container {
     padding: 1rem;
   }
-  
+
   .header-info {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .header-actions {
     flex-direction: column;
     width: 100%;
   }
-  
+
   .search-box {
     max-width: 100%;
     width: 100%;
   }
-  
+
   .filter-select {
     width: 100%;
   }
-  
+
   .table-container {
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   .assets-table {
     min-width: 1200px;
   }
@@ -415,14 +408,13 @@
 
 @media (max-width: 480px) {
   .page-container {
-    margin-left: 0;
     padding: 0.5rem;
   }
-  
+
   .header-info h2 {
     font-size: 1.25rem;
   }
-  
+
   .stat-badge {
     font-size: 0.8rem;
     padding: 0.4rem 0.8rem;

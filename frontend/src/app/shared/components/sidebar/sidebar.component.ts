@@ -18,8 +18,13 @@ export class SidebarComponent {
     @Output() closeSidebar = new EventEmitter<void>();
 
     isProfileDropdownOpen = false;
+    isCollapsed = false;
 
     toggleProfileDropdown() {
         this.isProfileDropdownOpen = !this.isProfileDropdownOpen;
+    }
+
+    toggleCollapse() {
+        this.isCollapsed = !this.isCollapsed;
     }
 }
