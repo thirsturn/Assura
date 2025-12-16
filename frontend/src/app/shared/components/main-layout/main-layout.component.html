@@ -1,0 +1,18 @@
+<div class="admin-layout">
+    <div class="admin-layout">
+        <div class="mobile-overlay" [class.show]="isSidebarOpen" (click)="closeSidebar()"></div>
+
+        <app-sidebar [isOpen]="isSidebarOpen" [role]="adminRole" [userName]="adminName"
+            [userProfilePicture]="adminProfilePicture" (closeSidebar)="closeSidebar()">
+        </app-sidebar>
+
+        <main class="main-content">
+            <app-header [title]="title" [subtitle]="subtitle" (toggleSidebar)="toggleSidebar()">
+                <ng-content select="[header-actions]"></ng-content>
+            </app-header>
+
+            <div class="content-area">
+                <ng-content></ng-content>
+            </div>
+        </main>
+    </div>

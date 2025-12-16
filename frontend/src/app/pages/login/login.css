@@ -12,7 +12,7 @@
 /* Login box */
 .logging-section {
     color: rgb(0, 0, 0);
-    background-color: #a4c2e3;
+    background-color: #81a7ff;
     padding: 40px 50px;
     border-radius: 20px;
     width: 380px;
@@ -57,6 +57,7 @@
 .assure {
     font-size: 200%;
     font-weight: bold;
+    border: #000000;
 }
 
 /* Label + Input container */

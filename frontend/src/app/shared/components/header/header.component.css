@@ -1,0 +1,92 @@
+/* Main Content Styles */
+.top-bar {
+    height: 64px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #eef0f2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.page-header {
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+}
+
+.page-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
+.page-subtitle {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: #64748b;
+}
+
+.icon-btn:hover {
+    background-color: #f1f5f9;
+}
+
+.icon-btn img,
+.icon-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Hamburger Button (Hidden on Desktop) */
+.hamburger-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 16px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+    color: #64748b;
+}
+
+.hamburger-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .top-bar {
+        padding: 0 16px;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .hamburger-btn {
+        display: flex;
+        margin-right: 10px;
+    }
+}
