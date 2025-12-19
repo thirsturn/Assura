@@ -34,8 +34,8 @@ export class LookupService {
     return this.http.get<ApiResponse<LookupItem[]>>(`${this.apiUrl}/locations`);
   }
 
-  getDepartments(): Observable<ApiResponse<LookupItem[]>> {
-    return this.http.get<ApiResponse<LookupItem[]>>(`${this.apiUrl}/departments`);
+  getDivisions(): Observable<ApiResponse<LookupItem[]>> {
+    return this.http.get<ApiResponse<LookupItem[]>>(`${this.apiUrl}/divisions`);
   }
 
   getSuppliers(): Observable<ApiResponse<LookupItem[]>> {
@@ -50,12 +50,8 @@ export class LookupService {
     return this.http.post<ApiResponse<LookupItem>>(`${this.apiUrl}/statuses`, data);
   }
 
-  createLocation(data: Partial<LookupItem>): Observable<ApiResponse<LookupItem>> {
-    return this.http.post<ApiResponse<LookupItem>>(`${this.apiUrl}/locations`, data);
-  }
-
-  createDepartment(data: Partial<LookupItem>): Observable<ApiResponse<LookupItem>> {
-    return this.http.post<ApiResponse<LookupItem>>(`${this.apiUrl}/departments`, data);
+  createDivision(data: Partial<LookupItem>): Observable<ApiResponse<LookupItem>> {
+    return this.http.post<ApiResponse<LookupItem>>(`${this.apiUrl}/divisions`, data);
   }
 
   createSupplier(data: Partial<LookupItem>): Observable<ApiResponse<LookupItem>> {

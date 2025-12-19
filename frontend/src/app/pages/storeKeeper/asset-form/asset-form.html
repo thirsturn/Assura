@@ -1,261 +1,190 @@
 <div class="page-container">
-    <div class="success-banner" *ngIf="showSuccessMessage">
-      <span class="success-icon">✓</span>
-      Asset was created successfully.
+  <div class="success-banner" *ngIf="showSuccessMessage">
+    <span class="success-icon">✓</span>
+    Asset was created successfully.
+  </div>
+
+  <div class="form-container">
+    <div class="form-header">
+      <h2>New Asset</h2>
+      <button class="btn-import" type="button">
+        <span class="btn-icon">⬇</span>
+        Import
+      </button>
     </div>
-  
-    <div class="form-container">
-      <div class="form-header">
-        <h2>New Asset</h2>
-        <button class="btn-import" type="button">
-          <span class="btn-icon">⬇</span>
-          Import
+
+    <form [formGroup]="assetForm" (ngSubmit)="onSubmit()" class="asset-form">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="asset_id">Asset ID <span class="required">*</span></label>
+          <input type="text" id="asset_id" formControlName="asset_id" class="form-control" placeholder="Enter Asset ID"
+            [class.invalid]="assetForm.get('asset_id')?.invalid && assetForm.get('asset_id')?.touched">
+          <div class="error-message" *ngIf="assetForm.get('asset_id')?.invalid && assetForm.get('asset_id')?.touched">
+            Asset ID is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="product_id">Product <span class="required">*</span></label>
+          <div class="input-with-button">
+            <select id="product_id" formControlName="product_id" class="form-control"
+              [class.invalid]="assetForm.get('product_id')?.invalid && assetForm.get('product_id')?.touched">
+              <option value="">Search for Product</option>
+              <option *ngFor="let product of products" [value]="product.id">
+                {{ product.name }}
+              </option>
+            </select>
+            <button type="button" class="btn-add">+ New</button>
+          </div>
+          <div class="error-message"
+            *ngIf="assetForm.get('product_id')?.invalid && assetForm.get('product_id')?.touched">
+            Product is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="status_id">Status <span class="required">*</span></label>
+          <div class="input-with-button">
+            <select id="status_id" formControlName="status_id" class="form-control"
+              [class.invalid]="assetForm.get('status_id')?.invalid && assetForm.get('status_id')?.touched">
+              <option value="">Search for Status</option>
+              <option *ngFor="let status of statuses" [value]="status.id">
+                {{ status.name }}
+              </option>
+            </select>
+            <button type="button" class="btn-add">+ New</button>
+          </div>
+          <div class="error-message" *ngIf="assetForm.get('status_id')?.invalid && assetForm.get('status_id')?.touched">
+            Status is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="supplier_id">Supplier</label>
+          <div class="input-with-button">
+            <select id="supplier_id" formControlName="supplier_id" class="form-control">
+              <option value="">Search for Supplier</option>
+              <option *ngFor="let supplier of suppliers" [value]="supplier.id">
+                {{ supplier.name }}
+              </option>
+            </select>
+            <button type="button" class="btn-add">+ New</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group">
+          <label for="division_id">Division</label>
+          <div class="input-with-button">
+            <select id="division_id" formControlName="division_id" class="form-control">
+              <option value="">Search for Division</option>
+              <option *ngFor="let division of divisions" [value]="division.id">
+                {{ division.name }}
+              </option>
+            </select>
+            <button type="button" class="btn-add">+ New</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="asset_name">Asset Name</label>
+          <input type="text" id="asset_name" formControlName="asset_name" class="form-control" placeholder="Asset Name">
+        </div>
+
+        <div class="form-group">
+          <label for="serial_number">Serial Number</label>
+          <input type="text" id="serial_number" formControlName="serial_number" class="form-control"
+            placeholder="Serial Number">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="warranty_expiration_date">Warranty Expiration Date</label>
+          <input type="date" id="warranty_expiration_date" formControlName="warranty_expiration_date"
+            class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="order_number">Order Number</label>
+          <input type="text" id="order_number" formControlName="order_number" class="form-control"
+            placeholder="Order Number">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="purchase_date">Purchase Date</label>
+          <input type="date" id="purchase_date" formControlName="purchase_date" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="purchase_cost">Purchase Cost</label>
+          <div class="cost-input">
+            <select formControlName="currency" class="currency-select">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+              <option value="LKR">LKR</option>
+            </select>
+            <input type="number" id="purchase_cost" formControlName="purchase_cost" class="form-control cost-field"
+              placeholder="Purchase Cost" step="0.01">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="schedule_audit">Schedule Audit</label>
+          <select id="schedule_audit" formControlName="schedule_audit" class="form-control">
+            <option value="">Select Audit Time</option>
+            <option value="monthly">Monthly</option>
+            <option value="quarterly">Quarterly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="notes">Notes</label>
+          <textarea id="notes" formControlName="notes" class="form-control" rows="4"
+            placeholder="Enter any additional notes..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label>Image</label>
+          <div class="image-upload-area">
+            <div class="image-preview-container" *ngIf="imagePreview">
+              <img [src]="imagePreview" alt="Preview" class="image-preview">
+            </div>
+            <div class="image-placeholder" *ngIf="!imagePreview">
+              <div class="placeholder-icon">🖼️</div>
+            </div>
+            <div class="file-input-wrapper">
+              <input type="file" id="image-input" accept="image/*" (change)="onFileSelected($event)" hidden>
+              <label for="image-input" class="btn-choose-file">Choose File</label>
+              <span class="file-name">{{ selectedFile?.name || 'No file chosen' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-save" [disabled]="isSubmitting">
+          <span class="btn-icon">💾</span>
+          {{ isSubmitting ? 'Saving...' : 'Save' }}
         </button>
       </div>
-  
-      <form [formGroup]="assetForm" (ngSubmit)="onSubmit()" class="asset-form">
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label for="asset_id">Asset ID <span class="required">*</span></label>
-            <input 
-              type="text" 
-              id="asset_id" 
-              formControlName="asset_id"
-              class="form-control"
-              placeholder="Enter Asset ID"
-              [class.invalid]="assetForm.get('asset_id')?.invalid && assetForm.get('asset_id')?.touched">
-            <div class="error-message" *ngIf="assetForm.get('asset_id')?.invalid && assetForm.get('asset_id')?.touched">
-              Asset ID is required
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <label for="product_id">Product <span class="required">*</span></label>
-            <div class="input-with-button">
-              <select 
-                id="product_id" 
-                formControlName="product_id"
-                class="form-control"
-                [class.invalid]="assetForm.get('product_id')?.invalid && assetForm.get('product_id')?.touched">
-                <option value="">Search for Product</option>
-                <option *ngFor="let product of products" [value]="product.id">
-                  {{ product.name }}
-                </option>
-              </select>
-              <button type="button" class="btn-add">+ New</button>
-            </div>
-            <div class="error-message" *ngIf="assetForm.get('product_id')?.invalid && assetForm.get('product_id')?.touched">
-              Product is required
-            </div>
-          </div>
-        </div>
-  
-        <div class="form-row">
-          <div class="form-group">
-            <label for="status_id">Status <span class="required">*</span></label>
-            <div class="input-with-button">
-              <select 
-                id="status_id" 
-                formControlName="status_id"
-                class="form-control"
-                [class.invalid]="assetForm.get('status_id')?.invalid && assetForm.get('status_id')?.touched">
-                <option value="">Search for Status</option>
-                <option *ngFor="let status of statuses" [value]="status.id">
-                  {{ status.name }}
-                </option>
-              </select>
-              <button type="button" class="btn-add">+ New</button>
-            </div>
-            <div class="error-message" *ngIf="assetForm.get('status_id')?.invalid && assetForm.get('status_id')?.touched">
-              Status is required
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <label for="supplier_id">Supplier</label>
-            <div class="input-with-button">
-              <select 
-                id="supplier_id" 
-                formControlName="supplier_id"
-                class="form-control">
-                <option value="">Search for Supplier</option>
-                <option *ngFor="let supplier of suppliers" [value]="supplier.id">
-                  {{ supplier.name }}
-                </option>
-              </select>
-              <button type="button" class="btn-add">+ New</button>
-            </div>
-          </div>
-        </div>
-  
-        <div class="form-row">
-          <div class="form-group">
-            <label for="location_id">Location</label>
-            <div class="input-with-button">
-              <select 
-                id="location_id" 
-                formControlName="location_id"
-                class="form-control">
-                <option value="">Search for Location</option>
-                <option *ngFor="let location of locations" [value]="location.id">
-                  {{ location.name }}
-                </option>
-              </select>
-              <button type="button" class="btn-add">+ New</button>
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <label for="department_id">Department</label>
-            <div class="input-with-button">
-              <select 
-                id="department_id" 
-                formControlName="department_id"
-                class="form-control">
-                <option value="">Search for Department</option>
-                <option *ngFor="let dept of departments" [value]="dept.id">
-                  {{ dept.name }}
-                </option>
-              </select>
-              <button type="button" class="btn-add">+ New</button>
-            </div>
-          </div>
-        </div>
-  
-        <div class="form-row">
-          <div class="form-group">
-            <label for="asset_name">Asset Name</label>
-            <input 
-              type="text" 
-              id="asset_name" 
-              formControlName="asset_name"
-              class="form-control"
-              placeholder="Asset Name">
-          </div>
-  
-          <div class="form-group">
-            <label for="serial_number">Serial Number</label>
-            <input 
-              type="text" 
-              id="serial_number" 
-              formControlName="serial_number"
-              class="form-control"
-              placeholder="Serial Number">
-          </div>
-        </div>
-  
-        <div class="form-row">
-          <div class="form-group">
-            <label for="warranty_expiration_date">Warranty Expiration Date</label>
-            <input 
-              type="date" 
-              id="warranty_expiration_date" 
-              formControlName="warranty_expiration_date"
-              class="form-control">
-          </div>
-  
-          <div class="form-group">
-            <label for="order_number">Order Number</label>
-            <input 
-              type="text" 
-              id="order_number" 
-              formControlName="order_number"
-              class="form-control"
-              placeholder="Order Number">
-          </div>
-        </div>
-  
-        <div class="form-row">
-          <div class="form-group">
-            <label for="purchase_date">Purchase Date</label>
-            <input 
-              type="date" 
-              id="purchase_date" 
-              formControlName="purchase_date"
-              class="form-control">
-          </div>
-  
-          <div class="form-group">
-            <label for="purchase_cost">Purchase Cost</label>
-            <div class="cost-input">
-              <select formControlName="currency" class="currency-select">
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-                <option value="GBP">GBP</option>
-                <option value="LKR">LKR</option>
-              </select>
-              <input 
-                type="number" 
-                id="purchase_cost" 
-                formControlName="purchase_cost"
-                class="form-control cost-field"
-                placeholder="Purchase Cost"
-                step="0.01">
-            </div>
-          </div>
-        </div>
-  
-        <div class="form-row">
-          <div class="form-group full-width">
-            <label for="schedule_audit">Schedule Audit</label>
-            <select 
-              id="schedule_audit" 
-              formControlName="schedule_audit"
-              class="form-control">
-              <option value="">Select Audit Time</option>
-              <option value="monthly">Monthly</option>
-              <option value="quarterly">Quarterly</option>
-              <option value="yearly">Yearly</option>
-            </select>
-          </div>
-        </div>
-  
-        <div class="form-row">
-          <div class="form-group full-width">
-            <label for="notes">Notes</label>
-            <textarea 
-              id="notes" 
-              formControlName="notes"
-              class="form-control"
-              rows="4"
-              placeholder="Enter any additional notes..."></textarea>
-          </div>
-        </div>
-  
-        <div class="form-row">
-          <div class="form-group full-width">
-            <label>Image</label>
-            <div class="image-upload-area">
-              <div class="image-preview-container" *ngIf="imagePreview">
-                <img [src]="imagePreview" alt="Preview" class="image-preview">
-              </div>
-              <div class="image-placeholder" *ngIf="!imagePreview">
-                <div class="placeholder-icon">🖼️</div>
-              </div>
-              <div class="file-input-wrapper">
-                <input 
-                  type="file" 
-                  id="image-input"
-                  accept="image/*"
-                  (change)="onFileSelected($event)"
-                  hidden>
-                <label for="image-input" class="btn-choose-file">Choose File</label>
-                <span class="file-name">{{ selectedFile?.name || 'No file chosen' }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        <div class="form-actions">
-          <button 
-            type="submit" 
-            class="btn-save"
-            [disabled]="isSubmitting">
-            <span class="btn-icon">💾</span>
-            {{ isSubmitting ? 'Saving...' : 'Save' }}
-          </button>
-        </div>
-      </form>
-    </div>
+    </form>
   </div>
+</div>

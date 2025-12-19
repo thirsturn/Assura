@@ -26,7 +26,7 @@
           </select>
   
           <select [(ngModel)]="selectedLocation" (change)="onFilterChange()" class="filter-select">
-            <option value="">All Locations</option>
+            <option value="">All Divisions</option>
             <option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</option>
           </select>
   

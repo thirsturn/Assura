@@ -22,8 +22,7 @@ export class AssetFormComponent implements OnInit {
   assetForm!: FormGroup;
   products: LookupItem[] = [];
   statuses: LookupItem[] = [];
-  locations: LookupItem[] = [];
-  departments: LookupItem[] = [];
+  divisions: LookupItem[] = [];
   suppliers: LookupItem[] = [];
   selectedFile: File | null = null;
   imagePreview: string | null = null;
@@ -41,8 +40,7 @@ export class AssetFormComponent implements OnInit {
       product_id: ['', Validators.required],
       status_id: ['', Validators.required],
       supplier_id: [''],
-      location_id: [''],
-      department_id: [''],
+      division_id: [''],
       asset_name: [''],
       serial_number: [''],
       warranty_expiration_date: [''],
@@ -74,22 +72,13 @@ export class AssetFormComponent implements OnInit {
       error: (error: any) => console.error('Error loading statuses:', error)
     });
 
-    this.lookupService.getLocations().subscribe({
+    this.lookupService.getDivisions().subscribe({
       next: (response: any) => {
         if (response.success && response.data) {
-          this.locations = response.data;
+          this.divisions = response.data;
         }
       },
-      error: (error: any) => console.error('Error loading locations:', error)
-    });
-
-    this.lookupService.getDepartments().subscribe({
-      next: (response: any) => {
-        if (response.success && response.data) {
-          this.departments = response.data;
-        }
-      },
-      error: (error: any) => console.error('Error loading departments:', error)
+      error: (error: any) => console.error('Error loading divisions:', error)
     });
 
     this.lookupService.getSuppliers().subscribe({
